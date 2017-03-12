@@ -8,10 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 
 import br.edu.iff.pooa20162.teste.R;
 
 public class ListaPActivity extends AppCompatActivity {
+
+    public void chamaCadastradosP(View v){
+        Intent intentP1 = new Intent(ListaPActivity.this, CadastroActivity.class);
+        startActivity(intentP1);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
