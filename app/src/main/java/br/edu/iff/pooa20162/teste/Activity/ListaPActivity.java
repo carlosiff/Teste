@@ -8,8 +8,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import br.edu.iff.pooa20162.teste.R;
+import br.edu.iff.pooa20162.teste.Adapter.ProprietarioAdapter;
+import br.edu.iff.pooa20162.teste.Model.Proprietario;
 
 public class ListaPActivity extends AppCompatActivity {
 
@@ -63,5 +70,32 @@ public class ListaPActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onResume() {
+        super.onResume();
+        final ArrayList<Proprietario> proprietarios  = (ArrayList) Proprietario.listAll(Proprietario.class);
+
+        ListView lista = (ListView) findViewById(R.id.lvProprietarios);
+        ArrayAdapter adapter = new ProprietarioAdapter(this,proprietarios);
+        lista.setAdapter(adapter);
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ListaPActivity.this,CadastroActivity.class);
+
+                intent.putExtra("id",proprietarios.get(i).getId().intValue());
+                intent.putExtra("nome",proprietarios.get(i).getNome());
+                intent.putExtra("endereco",proprietarios.get(i).getEndereco());
+                intent.putExtra("telefone",proprietarios.get(i).getTelefone());
+                intent.putExtra("dataNasc",proprietarios.get(i).getDataNasc());
+
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 }
